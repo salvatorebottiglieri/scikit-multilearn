@@ -153,11 +153,13 @@ class ClassifierChain(ProblemTransformationBase):
             self.classifier = copy.deepcopy(self.classifier)
             y_subset = self._generate_data_subset(y, label, axis=1)
 
-            self.classifiers_[label] = self.classifier.fit(
+            self.classifier.fit(
                 self._ensure_input_format(X_extended),
                 self._ensure_output_format(y_subset),
             )
             X_extended = hstack([X_extended, y_subset])
+
+            self.classifiers_[label] = self.classifier
 
         return self
 
